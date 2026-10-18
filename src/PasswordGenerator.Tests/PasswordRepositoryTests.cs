@@ -1,3 +1,9 @@
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
+using PasswordGenerator.Api.Data;
+using PasswordGenerator.Api.Models;
+using PasswordGenerator.Api.Repositories;
+
 namespace PasswordGenerator.Tests;
 
 public class PasswordRepositoryTests

@@ -9,6 +9,7 @@ Implementar uma API didática que gera senhas e permite recuperá-las por GUID. 
 - Um serviço de aplicação concentra a geração, validação e consulta das senhas.
 - Um repositório isola a persistência e é consumido pelo serviço de aplicação.
 - O repositório usa Entity Framework Core para persistir os dados em SQLite.
+- A aplicação aplica as migrações pendentes do banco durante a inicialização, antes de aceitar requisições.
 - O fluxo principal é: endpoint -> serviço de aplicação -> repositório -> banco de dados.
 - A validação do formato do GUID ocorre na fronteira HTTP; regras de geração da senha ficam no serviço de aplicação.
 
@@ -22,6 +23,7 @@ Implementar uma API didática que gera senhas e permite recuperá-las por GUID. 
 - D-07: Retornar HTTP 400 com `ProblemDetails` para GUID em formato inválido e HTTP 404 quando o GUID for válido, mas não existir. Isso segue a constituição e os critérios de aceite da especificação.
 - D-08: Armazenar a senha sem criptografia, sem autenticação e sem autorização nesta versão, conforme o escopo didático definido na especificação. O sistema não deve ser usado em produção.
 - D-09: Usar `Microsoft.EntityFrameworkCore.Design` e a ferramenta local `dotnet-ef`, registrada em `src/.config/dotnet-tools.json`, para criar e manter migrações versionadas do SQLite. São ferramentas de desenvolvimento necessárias para aplicar o modelo de dados de forma reproduzível e não fazem parte do runtime da API.
+- D-10: Aplicar migrações pendentes com `Database.MigrateAsync()` durante a inicialização. Assim, `dotnet run` prepara o banco antes de iniciar a API, sem exigir um comando manual de migração; essa conveniência é apropriada ao escopo didático local, que não é destinado à produção.
 
 ## Modelo de dados
 - Entidade `GeneratedPassword`:
